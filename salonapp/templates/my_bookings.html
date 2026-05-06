@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings | Aura Premium Salon</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette for visual identification */
+            --nav-blue: #1A252F;       /* Distinct Darker Navy for Navbar */
+            --body-blue: #232F3D;      /* Standard Aura Navy for Body */
+            --salmon: #C68D77;         /* Accent for icons/dividers */
+            --gold-accent: #E2B591;    /* Borders and details */
+            --white: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --glass-box: rgba(255, 255, 255, 0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--body-blue);
+            /* SVG background texture to identify body area */
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 Q 50 50 100 100" stroke="rgba(226, 181, 145, 0.05)" fill="none" stroke-width="0.5"/></svg>');
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 90px; /* Space for the fixed navbar */
+        }
+
+        /* ================= FIXED NAVBAR (SOLID BLUE) ================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--nav-blue);
+            border-bottom: 1px solid rgba(226, 181, 145, 0.2);
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .brand-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand-tagline {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: -5px;
+        }
+
+        .btn-home {
+            padding: 0.6rem 1.4rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .btn-home:hover {
+            background: white;
+            color: var(--nav-blue);
+        }
+
+        /* ================= SUCCESS NOTIFICATION ================= */
+        .success-overlay {
+            background: rgba(141, 181, 150, 0.15);
+            border: 1px solid #8db596;
+            color: #8db596;
+            padding: 1.2rem;
+            border-radius: 4px;
+            text-align: center;
+            max-width: 900px;
+            margin: 1.5rem auto 0;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        /* ================= DASHBOARD CONTENT ================= */
+        .container {
+            flex: 1;
+            padding: 3rem 8%;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .leaf-divider {
+            color: var(--gold-accent);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* GLASS STYLED WRAPPER */
+        .table-wrapper {
+            background: var(--glass-box);
+            border: 1px solid rgba(226, 181, 145, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            padding: 1.5rem 1.2rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold-accent);
+            border-bottom: 1px solid rgba(226, 181, 145, 0.2);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td {
+            padding: 1.8rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1rem;
+            color: var(--white);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .service-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .status-confirmed { border-left: 3px solid #8db596; color: #8db596; }
+        .status-pending { border-left: 3px solid var(--gold-accent); color: var(--gold-accent); }
+
+        .empty-state {
+            text-align: center;
+            padding: 6rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            text-align: center;
+            padding: 4rem 5%;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- FIXED SOLID NAV -->
+<nav>
+    <div class="brand-container">
+        <a href="{% url 'home' %}" class="brand">AURA</a>
+        <span class="brand-tagline">Premium Salon & Spa</span>
+    </div>
+    <a href="{% url 'home' %}" class="btn-home">🏠 Back to Home</a>
+</nav>
+
+<!-- ALERT SECTION -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="success-overlay">
+            <span>🌿</span> {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<!-- MAIN DASHBOARD -->
+<div class="container">
+    <div class="page-header">
+        <h2 class="page-title">My Bookings</h2>
+        <div class="leaf-divider">🌿</div>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bookings %}
+                <tr>
+                    <td class="service-name">{{ b.service.service_name }}</td>
+                    <td style="color: var(--text-muted);">{{ b.date }}</td>
+                    <td style="color: var(--text-muted);">{{ b.time }}</td>
+                    <td>
+                        <span class="status-badge {% if b.status == 'Confirmed' %}status-confirmed{% else %}status-pending{% endif %}">
+                            {{ b.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="empty-state">You have no upcoming appointments.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">AURA</div>
+    <div style="color: var(--salmon); margin-bottom: 15px;">🌿</div>
+    <p style="font-size: 0.8rem; opacity: 0.4;">&copy; 2026 Aura Premium Salon & Spa. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

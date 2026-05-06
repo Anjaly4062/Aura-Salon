@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | AURA</title>
+    <style>
+        :root {
+            --aura-navy: #1a2a3a;
+            --aura-coral: #d48b78;
+            --aura-bg: #f8f4f1;
+            --white: #ffffff;
+            --text-muted: #888;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--aura-bg);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-box {
+            width: 400px;
+            padding: 40px;
+            background: var(--white);
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: var(--aura-navy);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-family: serif;
+            font-weight: normal;
+            margin-bottom: 30px;
+            color: var(--aura-navy);
+        }
+
+        /* Container for individual field styling */
+        .input-group {
+            text-align: left; /* Align labels to the left */
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            transition: 0.3s;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.95rem;
+            outline: none;
+            box-sizing: border-box;
+            background: transparent;
+            color: var(--aura-navy);
+        }
+
+        /* Style change on focus */
+        input:focus {
+            border-bottom: 1px solid var(--aura-coral);
+        }
+
+        /* Subtle label color change when input is focused */
+        .input-group:focus-within label {
+            color: var(--aura-coral);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            background-color: var(--aura-navy);
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--aura-coral);
+        }
+
+        .switch-link {
+            margin-top: 20px;
+            font-size: 0.85rem;
+        }
+
+        .switch-link a {
+            color: var(--aura-coral);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-box">
+    <div class="logo-text">AURA</div>
+    <h2>Join Our Community</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="input-group">
+            <label for="username">Full Name</label>
+            <input type="text" id="username" name="username" placeholder="Enter your name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="email@example.com" required>
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="input-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
+        </div>
+        
+        <button type="submit">Create Account</button>
+    </form>
+
+    <div class="switch-link">
+        Already have an account? <a href="{% url 'login' %}">Login here</a>
+    </div>
+</div>
+
+</body>
+</html>

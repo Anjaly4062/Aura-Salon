@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura | Premium Salon & Spa</title>
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --slate-blue: #2b3e50;
+            --coral-peach: #e57b68;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--slate-blue);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navbar */
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .brand {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .brand::before {
+            content: '🌿';
+            font-size: 1.5rem;
+            filter: grayscale(100%) sepia(100%) hue-rotate(320deg) saturate(300%) brightness(1.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--coral-peach);
+        }
+
+        .btn-reserve {
+            padding: 0.6rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: var(--transition);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .btn-reserve::before {
+            content: '📅';
+            font-size: 1rem;
+        }
+
+        .btn-reserve:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 8%;
+            position: relative;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('beauty_facial_1777618997240.png'); 
+            background-size: cover;
+            background-position: center right;
+            z-index: -1;
+        }
+
+        /* Gradient overlay to match the image: solid blue on left, transparent on right */
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(43, 62, 80, 1) 0%, rgba(43, 62, 80, 0.8) 40%, rgba(43, 62, 80, 0) 100%);
+        }
+
+        .hero-content {
+            max-width: 600px;
+            animation: fadeUp 1s ease-out forwards;
+            position: relative;
+            z-index: 10;
+        }
+
+        .pre-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #fff;
+        }
+
+        .pre-title::before {
+            content: '';
+            display: inline-block;
+            width: 40px;
+            height: 1px;
+            background-color: var(--coral-peach);
+        }
+
+        .hero-title {
+            font-size: 5.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .hero-subtitle {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 450px;
+            line-height: 1.8;
+        }
+
+        .btn-coral {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--coral-peach);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 30px; 
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .btn-coral:hover {
+            background-color: #d16b5a;
+            transform: translateX(5px);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 6rem 5%;
+            background: #fdfaf9; 
+            color: var(--slate-blue);
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--slate-blue);
+            margin-bottom: 4rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            height: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item:nth-child(2) {
+            transform: translateY(3rem);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.08);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--slate-blue);
+            padding: 4rem 5%;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3.5rem; }
+            .hero-bg::after {
+                background: linear-gradient(90deg, rgba(43, 62, 80, 0.95) 0%, rgba(43, 62, 80, 0.7) 100%);
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .gallery-item:nth-child(2) { transform: translateY(0); }
+            .gallery-item { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="brand">AURA</a>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <a href="login" class="btn-reserve">View Services</a>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Contact</a></li>
+            
+            
+            <li><a href="{% url 'login' %}">Login</a></li>
+        </ul>
+        
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="pre-title">AURA</p>
+            <h1 class="hero-title">Beauty salon</h1>
+            <p class="hero-subtitle">Where your natural beauty is celebrated, offering flawless beauty care experiences from skin, hair to body.</p>
+            <a href="view_services" class="btn-coral">Our Services &rarr;</a>
+        </div>
+    </section>
+
+    
+
+    <footer>
+        <p>&copy; 2026 Aura Premium Salon & Spa. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.7;">123 Luxury Avenue, Metropolis</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

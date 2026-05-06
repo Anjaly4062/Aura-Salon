@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Details | Aura Premium Salon</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Colors extracted from the image */
+            --dark-navy: #232F3D;      /* Background and Navbar base */
+            --salmon: #C68D77;         /* Prices and Dividers */
+            --btn-accent: #D69E87;     /* Booking button */
+            --white: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --card-bg: #FFFFFF;        /* Clean white card for contrast */
+            --gold-divider: #E2B591;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--dark-navy);
+            /* Subtle background pattern to match the image's "painted" look */
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 Q 50 50 100 100" stroke="rgba(226, 181, 145, 0.05)" fill="none" stroke-width="0.5"/></svg>');
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================= NAVBAR ================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: var(--dark-navy);
+        }
+
+        .brand-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand-tagline {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: -5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-divider);
+        }
+
+        .btn-bookings-nav {
+            padding: 0.7rem 1.5rem;
+            background: var(--btn-accent);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        /* ================= CONTAINER & CARD ================= */
+        .container {
+            margin-top: 150px;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .detail-card {
+            background: var(--card-bg);
+            color: var(--dark-navy);
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            padding: 4rem 3rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        /* Decorative Leaf Icon (matches center of image) */
+        .card-icon {
+            font-size: 2rem;
+            color: var(--salmon);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold-divider);
+            margin: 1.5rem auto;
+        }
+
+        .price {
+            font-size: 2rem;
+            color: var(--salmon);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .desc {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* "Book Now" Button Styled like "View Details" */
+        .btn-confirm {
+            display: inline-block;
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--dark-navy);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn-confirm:hover {
+            background: var(--salmon);
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            background: #E6E1DC; /* Light footer to match image bottom */
+            color: #333;
+            text-align: center;
+            padding: 3rem 5%;
+            margin-top: 5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="brand-container">
+        <a href="{% url 'home' %}" class="brand">AURA</a>
+        <span class="brand-tagline">Premium Salon & Spa</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li><a href="{% url 'my_bookings' %}" class="btn-bookings-nav">🗓 My Bookings</a></li>
+    </ul>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+    <div class="detail-card">
+        <span class="card-icon">🌿</span>
+        <h2>{{ service.service_name }}</h2>
+        <div class="divider"></div>
+
+        <p class="desc">
+            {{ service.description|default:"Experience the pinnacle of relaxation and rejuvenation with our premium treatments." }}
+        </p>
+
+        <p class="price">₹ {{ service.price }}</p>
+        <a href="{% url 'book_service' service.id %}" class="btn-confirm">
+            Book Now →
+        </a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">AURA</div>
+    <div style="color: var(--salmon); margin-bottom: 15px;">🌿</div>
+
+</footer>
+
+</body>
+</html>

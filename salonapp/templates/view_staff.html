@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Staff | Aura Admin</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-navy: #0F171E;      /* Sidebar Background */
+            --main-navy: #16202A;      /* Content Background */
+            --salmon: #C68D77;         /* Accent Color */
+            --white: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --glass: rgba(255, 255, 255, 0.03);
+            --sidebar-width: 280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--main-navy);
+            /* Matching abstract gold/floral pattern */
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 Q 50 50 100 100" stroke="rgba(198, 141, 119, 0.05)" fill="none" stroke-width="0.5"/></svg>');
+            color: var(--white);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--dark-navy);
+            padding: 2.5rem 1.5rem;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+        }
+
+        .brand-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            color: var(--salmon);
+            text-transform: uppercase;
+        }
+
+        .brand-sub {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .nav-group {
+            flex-grow: 1;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover, .active-btn {
+            background: rgba(198, 141, 119, 0.1);
+            border-color: var(--salmon);
+        }
+
+        /* Sidebar Icons */
+        .nav-btn::before { font-size: 1.2rem; color: var(--salmon); }
+        .btn-add-service::before { content: '➕'; }
+        .btn-view-services::before { content: '📋'; }
+        .btn-add-staff::before { content: '👤+'; }
+        .btn-view-customers::before { content: '👥'; }
+        .btn-view-staff::before { content: '👔'; }
+
+        /* Logout Style */
+        .logout-section {
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1.5rem;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 1px solid rgba(198, 141, 119, 0.3);
+            color: var(--salmon);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-logout:hover {
+            background: var(--salmon);
+            color: var(--white);
+        }
+
+        /* ================= CONTENT AREA ================= */
+        .content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 4rem 5%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: var(--salmon);
+            margin: 0 auto;
+        }
+
+        /* STAFF GRID */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .staff-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .staff-card:hover {
+            border-color: var(--salmon);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(198, 141, 119, 0.1);
+            border: 1px solid var(--salmon);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .staff-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--salmon);
+            margin-bottom: 4px;
+        }
+
+        .username {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="brand-section">
+        <h1 class="brand-name">AURA</h1>
+        <p class="brand-sub">Admin Panel</p>
+    </div>
+
+    <nav class="nav-group">
+        <a href="{% url 'add_service' %}" class="nav-link">
+            <button class="nav-btn btn-add-service">Add Service</button>
+        </a>
+        <a href="{% url 'admin_view_services' %}" class="nav-link">
+            <button class="nav-btn btn-view-services">View Services</button>
+        </a>
+        <a href="{% url 'add_staff' %}" class="nav-link">
+            <button class="nav-btn btn-add-staff">Add Staff</button>
+        </a>
+        <a href="{% url 'view_customers' %}" class="nav-link">
+            <button class="nav-btn btn-view-customers">View Customers</button>
+        </a>
+        <a href="{% url 'view_staff' %}" class="nav-link">
+            <button class="nav-btn btn-view-staff active-btn">View Staff</button>
+        </a>
+    </nav>
+
+    <!-- Logout Button matches first admin page -->
+    <div class="logout-section">
+        <a href="{% url 'logout' %}" class="btn-logout">
+            <span>↩</span> Logout
+        </a>
+    </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="content">
+    <div class="page-header">
+        <h2 class="page-title">Staff Members</h2>
+        <div class="divider"></div>
+    </div>
+
+    <div class="staff-grid">
+        {% for s in staff %}
+        <div class="staff-card">
+            <div class="avatar">👔</div>
+            <div class="staff-info">
+                <span class="label">Team Member</span>
+                <span class="username">{{ s.username }}</span>
+            </div>
+        </div>
+        {% empty %}
+        <p style="text-align: center; width: 100%; color: var(--text-muted);">No staff members found.</p>
+        {% endfor %}
+    </div>
+</main>
+
+</body>
+</html>

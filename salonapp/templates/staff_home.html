@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Dashboard | AURA</title>
+    <style>
+        :root {
+            --aura-navy: #1a2a3a;
+            --aura-coral: #d48b78;
+            --aura-bg: #f8f4f1;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--aura-bg);
+            margin: 0;
+            color: var(--aura-navy);
+        }
+
+        /* Navbar with Logout */
+        .navbar {
+            background: var(--aura-navy);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 1.5rem;
+        }
+
+        .logout-link {
+            background: var(--aura-coral);
+            color: white;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Container */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h2 { font-family: serif; font-size: 2.2rem; }
+
+        /* Styled Table */
+        .booking-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .booking-table th {
+            background: #f2f2f2;
+            padding: 18px;
+            text-align: left;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .booking-table td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Update Button */
+        .btn-update {
+            background: var(--aura-navy);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-update:hover {
+            background: var(--aura-coral);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">AURA</div>
+    <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+</nav>
+
+<div class="container">
+    <h2>Welcome {{ staff.username }} 👋</h2>
+    <h3>Assigned Appointments</h3>
+
+    <table class="booking-table">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in bookings %}
+            <tr>
+                <td>{{ b.customer.username }}</td>
+                <td>{{ b.service.service_name }}</td>
+                <td>{{ b.date }}</td>
+                <td>{{ b.time }}</td>
+                <td>
+    {% if b.status == 'Completed' %}
+        <span style="color: green; font-weight: bold;">✓ Completed</span>
+    {% else %}
+        <form method="POST" action="{% url 'complete_booking' b.id %}">
+            {% csrf_token %}
+            <button type="submit">Mark Completed</button>
+        </form>
+    {% endif %}
+</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 40px;">No bookings assigned to you.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

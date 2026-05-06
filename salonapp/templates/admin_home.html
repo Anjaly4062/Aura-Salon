@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Aura</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-navy: #0F171E;      /* Sidebar Background */
+            --main-navy: #16202A;      /* Content Background */
+            --salmon: #C68D77;         /* Accent Color */
+            --white: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --glass: rgba(255, 255, 255, 0.03);
+            --sidebar-width: 280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--main-navy);
+            /* Abstract gold/floral pattern from image */
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 Q 50 50 100 100" stroke="rgba(198, 141, 119, 0.05)" fill="none" stroke-width="0.5"/></svg>');
+            color: var(--white);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--dark-navy);
+            padding: 2.5rem 1.5rem;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+        }
+
+        .brand-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            color: var(--salmon);
+            text-transform: uppercase;
+        }
+
+        .brand-sub {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .nav-group {
+            flex-grow: 1;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(198, 141, 119, 0.1);
+            border-color: var(--salmon);
+        }
+
+        /* Icon Placeholders */
+        .nav-btn::before {
+            font-size: 1.2rem;
+            color: var(--salmon);
+        }
+
+        /* Assigning simple emojis to mimic icons in picture */
+        .btn-add-service::before { content: '➕'; }
+        .btn-view-services::before { content: '📋'; }
+        .btn-add-staff::before { content: '👤+'; }
+        .btn-view-customers::before { content: '👥'; }
+        .btn-view-staff::before { content: '👔'; }
+
+        .logout-section {
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1.5rem;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 1px solid rgba(198, 141, 119, 0.3);
+            color: var(--salmon);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: var(--salmon);
+            color: var(--white);
+        }
+
+        /* ================= MAIN CONTENT ================= */
+        .content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem 5%;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 5rem;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .profile-info { text-align: right; }
+        .profile-name { font-size: 0.9rem; font-weight: 600; }
+        .profile-role { font-size: 0.75rem; color: var(--text-muted); }
+
+        .welcome-section {
+            max-width: 800px;
+        }
+
+        .pre-title {
+            color: var(--salmon);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .hero-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 2px;
+            background: var(--salmon);
+            margin-top: 10px;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 30px;
+            right: 50px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand-section">
+        <h1 class="brand-name">AURA</h1>
+        <p class="brand-sub">Admin Panel</p>
+    </div>
+
+    <nav class="nav-group">
+        <a href="{% url 'add_service' %}" class="nav-link">
+            <button class="nav-btn btn-add-service">Add Service</button>
+        </a>
+
+        <a href="{% url 'admin_view_services' %}" class="nav-link">
+            <button class="nav-btn btn-view-services">View Services</button>
+        </a>
+
+        <a href="{% url 'add_staff' %}" class="nav-link">
+            <button class="nav-btn btn-add-staff">Add Staff</button>
+        </a>
+
+        <a href="{% url 'view_customers' %}" class="nav-link">
+            <button class="nav-btn btn-view-customers">View Customers</button>
+        </a>
+
+        <a href="{% url 'view_staff' %}" class="nav-link">
+            <button class="nav-btn btn-view-staff">View Staff</button>
+        </a>
+    </nav>
+
+    <div class="logout-section">
+        <a href="{% url 'logout' %}"></a>
+        <button class="btn-logout"><span>↩</span> Logout</button>
+    </div>
+</aside>
+
+<main class="content">
+    <header>
+        <div class="admin-profile">
+            <div class="profile-info">
+                <p class="profile-name">Admin</p>
+                <p class="profile-role">Administrator</p>
+            </div>
+            <div style="width: 40px; height: 40px; background: var(--glass); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--salmon);">👤</div>
+        </div>
+    </header>
+
+    <div class="welcome-section">
+        <p class="pre-title">Welcome Back,</p>
+        <h2 class="hero-title">Admin</h2>
+        <p class="hero-desc">Manage your salon, staff, services and customers effortlessly from this unified dashboard.</p>
+    </div>
+
+    <footer>
+        <p>© 2026 Aura Premium Salon & Spa. All rights reserved.</p>
+    </footer>
+</main>
+
+</body>
+</html>

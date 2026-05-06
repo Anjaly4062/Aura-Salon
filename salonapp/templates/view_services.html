@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Services | Aura</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Primary Colors */
+            --dark-blue: #232F3D; /* Header/Card Text */
+            --salmon: #C68D77;    /* Price/Main Button/Icons */
+            --btn-book-bg: #D69E87; /* Specific button background from image */
+            --gold-detail: #E2B591; /* Fine lines/dividers */
+
+            /* Neutral Colors */
+            --white: #FFFFFF;
+            --text-on-dark: rgba(255, 255, 255, 0.9);
+            --text-secondary: #6C757D;
+            --card-border: #F1EFEF;
+            --footer-bg: #E6E1DC;
+            --main-content-bg: #232F3D; /* Base background from image */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--main-content-bg);
+            /* Background image with abstract lines and gold, matching the image */
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 C 60 20, 70 20, 80 10 S 100 0, 100 10" stroke="%232D3F51" fill="none" stroke-width="0.5"/><circle cx="90" cy="5" r="3" fill="%23E2B591"/></svg>');
+            background-size: 400px; /* Adjust size for pattern scale */
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: transparent; /* Makes it overlay the background */
+        }
+
+        .brand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand-tagline {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: rgba(255,255,255,0.7);
+            margin-top: -3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-detail);
+        }
+
+        .btn-book {
+            padding: 0.8rem 1.8rem;
+            background: var(--btn-book-bg);
+            color: white;
+            border-radius: 4px; /* More rectangular like image */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-book:hover {
+            background: #be8e78;
+        }
+
+        /* ================= PAGE TITLE ================= */
+        .page-header {
+            margin-top: 150px;
+            text-align: center;
+            padding: 0 5%;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        /* The custom gold leaf divider */
+        .divider {
+            display: block;
+            margin: 0.5rem auto 2rem;
+            text-align: center;
+            color: var(--gold-detail);
+            font-size: 1.2rem;
+        }
+        .divider::after {
+            content: "\1F33F"; /* Basic leaf icon, can replace with SVG */
+        }
+
+        .page-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 4rem;
+        }
+
+        /* ================= SERVICES LIST ================= */
+        .container {
+            padding: 0 8% 5rem; /* Matches image padding */
+            flex-grow: 1; /* Pushes footer down */
+        }
+
+        .services-list {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding-bottom: 2rem;
+            justify-content: center; /* Center cards if not filling screen */
+        }
+
+        /* ================= SERVICE CARD ================= */
+        .service-card {
+            min-width: 320px;
+            width: 320px;
+            background: var(--white);
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Image part */
+        .card-image-container {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            background-color: #eee; /* Fallback */
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Category Icon */
+        .service-icon-main {
+            font-size: 1.8rem;
+            color: var(--salmon);
+            margin-bottom: 0.8rem;
+        }
+
+        .service-name {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--dark-blue);
+            font-weight: 400;
+        }
+
+        /* Price/Details separator */
+        .card-separator {
+            width: 50px;
+            height: 1px;
+            background-color: var(--gold-detail);
+            margin: 0.5rem auto 1rem;
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            height: 60px; /* Limits and standardizes description height */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Shows max 3 lines */
+            -webkit-box-orient: vertical;
+        }
+
+        .service-price {
+            color: var(--salmon);
+            font-size: 1.4rem;
+            margin-top: auto; /* Pushes price/button to bottom */
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .card-btn {
+            display: inline-block;
+            padding: 1rem;
+            background: var(--dark-blue);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .card-btn:hover {
+            background: var(--salmon);
+        }
+
+        /* scrollbar styling */
+        .services-list::-webkit-scrollbar {
+            height: 8px;
+        }
+        .services-list::-webkit-scrollbar-thumb {
+            background: var(--salmon);
+            border-radius: 10px;
+        }
+        .services-list::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            background-color: var(--footer-bg);
+            color: #333;
+            text-align: center;
+            padding: 3rem 5%;
+            border-top: 1px solid #DED9D2;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-divider {
+            color: var(--salmon);
+            font-size: 1.2rem;
+            margin: 0.5rem auto 1.5rem;
+        }
+        .footer-divider::after {
+            content: "\1F33F"; /* Matching leaf icon */
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            color: #666;
+        }
+
+        .footer-address {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: normal;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="brand-container">
+        <a href="{% url 'home' %}" class="brand">AURA</a>
+        <div class="brand-tagline">PREMIUM SALON & SPA</div>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <!-- Calendar icon added like the image -->
+        <li><a href="{% url 'my_bookings' %}" class="btn-book">&#128197; My Bookings</a></li>
+    </ul>
+</nav>
+
+<!-- PAGE TITLE AREA -->
+<div class="page-header">
+    <h2 class="page-title">All Services</h2>
+    <div class="divider"></div> <!-- The gold leaf divider -->
+    <p class="page-description">Discover our range of premium beauty and wellness services crafted to bring out your natural glow.</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+    <div class="services-list">
+        {% for s in services %}
+        <div class="service-card">
+            
+
+            <!-- Simple Icon (Replace with appropriate icons for each service category) -->
+            <div class="service-icon-main">
+                &#10024; <!-- sparkle emoji as default -->
+                <!-- You could add logic here based on s.service_type for specific icons -->
+            </div>
+
+            <h3 class="service-name">{{ s.service_name }}</h3>
+            <div class="card-separator"></div>
+
+            <!-- Service Description Added -->
+            <p class="service-description">{{ s.description|default:"No description available." }}</p>
+
+            <p class="service-price">₹ {{ s.price }}</p>
+
+            <a href="{% url 'service_detail' s.id %}" class="card-btn">View Details &#10141;</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">AURA</div>
+    <div class="footer-divider"></div>
+
+</footer>
+
+</body>
+</html>

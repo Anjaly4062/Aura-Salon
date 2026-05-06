@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Aura Experience</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette from ChatGPT Image May 2, 2026, 09_37_22 AM.png */
+            --dark-navy: #232F3D;
+            --salmon: #C68D77;
+            --gold-accent: #E2B591;
+            --white: #FFFFFF;
+            --card-white: #FBFAF9;
+            --text-muted: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--dark-navy);
+            /* Subtle background pattern to match the image art */
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 Q 50 50 100 100" stroke="rgba(226, 181, 145, 0.05)" fill="none" stroke-width="0.5"/></svg>');
+            color: var(--white);
+            padding: 4rem 5%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .booking-container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .leaf-divider {
+            color: var(--gold-accent);
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            text-align: left;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold-accent);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* ================= STEP 1: DATE SELECTION ================= */
+        .date-form {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border: 1px solid rgba(226, 181, 145, 0.2);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--gold-accent);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            outline: none;
+        }
+
+        .btn-check {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--white);
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-check:hover {
+            background: var(--white);
+            color: var(--dark-navy);
+        }
+
+        /* ================= STEP 2: SLOT SELECTION ================= */
+        .slot-box {
+            max-height: 250px;
+            overflow-y: auto;
+            background: var(--card-white);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        /* Custom Scrollbar */
+        .slot-box::-webkit-scrollbar { width: 5px; }
+        .slot-box::-webkit-scrollbar-thumb { background: var(--salmon); border-radius: 10px; }
+
+        .slot-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--dark-navy);
+            transition: 0.3s;
+            font-weight: 400;
+        }
+
+        /* Hide the default radio button */
+        .slot-item input {
+            display: none;
+        }
+
+        .slot-item:hover {
+            border-color: var(--salmon);
+            background: #fdf5f2;
+        }
+
+        /* Style for when radio is checked */
+        .slot-item:has(input:checked) {
+            background: var(--dark-navy);
+            color: white;
+            border-color: var(--dark-navy);
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--salmon);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .book-btn:hover {
+            background: #be8e78;
+            transform: translateY(-2px);
+        }
+
+        .success-msg {
+            color: #8db596;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+
+    .success-overlay {
+        background: rgba(141, 181, 150, 0.15); /* Soft green tint */
+        border: 1px solid #8db596;
+        color: #8db596;
+        padding: 1.5rem;
+        border-radius: 4px;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-family: 'Outfit', sans-serif;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+
+
+    </style>
+</head>
+<body>
+
+
+<div class="booking-container">
+    
+
+    <!-- PLACE THE MESSAGE BLOCK HERE -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="success-overlay">
+                <span>🌿</span> {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <h2 class="page-title">Reserve Your Slot</h2>
+    <div class="leaf-divider">🌿</div>
+
+    {% if message %}
+        <p class="success-msg">{{ message }}</p>
+    {% endif %}
+
+    <!-- Step 1: Date selection -->
+    <form method="POST" class="date-form">
+        {% csrf_token %}
+        <label class="form-label" for="date-picker">Select  Date</label>
+        <input type="date" id="date-picker" name="date" min="{{ today|date:'Y-m-d' }}" value="{{ selected_date|date:'Y-m-d' }}">
+        <button type="submit" name="action" value="check" class="btn-check">Check Availability</button>
+    </form>
+
+    <!-- Step 2: Slot selection + BOOK button -->
+    {% if slots %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="date" value="{{ selected_date|date:'Y-m-d' }}">
+
+        <label class="form-label">Available Time Slots</label>
+        <div class="slot-box">
+            {% for slot in slots %}
+                <label class="slot-item">
+                    <input type="radio" name="time" value="{{ slot }}" required>
+                    <span>{{ slot }}</span>
+                </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit" name="action" value="book" class="book-btn">
+            Confirm Booking &nbsp; →
+        </button>
+    </form>
+    {% endif %}
+</div>
+
+</body>
+</html>

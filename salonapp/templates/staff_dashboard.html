@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #6a5acd;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f0f0f0;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .pending { background: orange; }
+        .confirmed { background: green; }
+        .cancelled { background: red; }
+    </style>
+</head>
+<body>
+
+<h2>My Bookings</h2>
+
+<table>
+    <tr>
+        <th>Customer</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+    </tr>
+
+    {% for b in bookings %}
+    <tr>
+        <td>{{ b.customer.username }}</td>
+        <td>{{ b.service.service_name }}</td>
+        <td>{{ b.date }}</td>
+        <td>{{ b.time }}</td>
+        <td>
+            <span class="status {{ b.status }}">
+                {{ b.status }}
+            </span>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No bookings found</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
